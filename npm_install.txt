@@ -1,0 +1,11 @@
+*필수사항
+npm install --save v-click-outside
+ -> 참고 사이트 : https://han-um.tistory.com/14
+
+npm i vue-chartjs chart.js
+
+
+npm install chart.js
+npm install vue-chartjs chart.js --save
+
+npm install vue-jwt-decode

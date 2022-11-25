@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Where Is My Home | Find APT</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Saira:wght@500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    <style>
+        .block::-webkit-scrollbar {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start -->
+    <div class="container-fluid fixed-top px-0 wow fadeIn" data-wow-delay="0.1s">
+        <div id="loginOff" style="display: block;">
+            <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex">
+                <div class="col-3 col-sm-6 col-lg-9">
+                </div>
+                <div class="col-9 col-sm-6 col-lg-3">
+                    <div id="header-top-second" class="clearfix">
+                        <div class="btn-group">
+                            <a href="sign_up.html" class="btn btn-default btn-sm"><i class="fa fa-user pr-2"></i> Sign
+                                Up</a>
+                        </div>
+
+                        <div class="btn-group">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-default btn-sm" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                                <i class="fa fa-lock pr-2"></i> Login
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            
+                                            <section>
+                                                <div class="container">
+                                                    <div class="card bg-dark text-white" style="border-radius: 1rem;">
+                                                        <div class="card-body p-5 text-center">
+                                    
+                                                            <div class="">
+                                    
+                                                                <h2 class="fw-bold text-white mb-2 text-uppercase">Login</h2>
+                                                                <p class="text-white-50 mb-5">Please enter your login and password!</p>
+                                    
+                                                                <div class="form-outline form-white mb-4">
+                                                                    <label class="form-label" for="id">ID</label>
+                                                                    <input type="text" id="id" class="form-control form-control-lg" />
+                                                                </div>
+                                    
+                                                                <div class="form-outline form-white mb-4">
+                                                                    <label class="form-label" for="password">Password</label>
+                                                                    <input type="password" id="password" class="form-control form-control-lg" />
+                                                                </div>
+                                    
+                                                                <p class="small mb-5 pb-lg-2"><a class="text-white-50" href="findPW.html">Forgot password?</a></p>
+                                    
+                                                                <button id="login" class="btn btn-outline-light btn-lg px-5" type="submit" data-bs-dismiss="modal">Login</button>
+                                    
+                                                            </div>
+                                    
+                                                            <div class="pt-5">
+                                                                <p class="mb-0">Don't have an account? <a href="sign_up.html" class="text-white-50 fw-bold">Sign
+                                                                        Up</a>
+                                                                </p>
+                                                            </div>
+                                    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </section>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loginOn" style="display: none;">
+            <div class="top-bar text-white-50 row gx-0 align-items-center d-none d-lg-flex" style="display: none;">
+                <div class="col-3 col-sm-6 col-lg-9">
+                </div>
+                <div class="col-9 col-sm-6 col-lg-3">
+                    <div id="header-top-second" class="clearfix">
+                        <div class="btn-group">
+                            <a class="btn btn-default btn-sm" id="logoutBtn"><i class="fa fa-user pr-2"></i> LogOut</a>
+                        </div>
+                        <div class="btn-group">
+                            <button id="header-top-drop-2" type="button"
+                                class="btn dropdown-toggle btn-default btn-sm dropdown-toggle--no-caret"
+                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-lock pr-2"></i> 마이 페이지
+                            </button>
+                            <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenu2">
+                                <li><button class="dropdown-item text-white" type="button" id="mypageMove" onclick="location.href='mypage.html'">회원 정보 확인</button></li>
+                                <!-- <li><button class="dropdown-item text-white" type="button">관심지역 등록</button></li> -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg navbar-dark py-lg-0 px-lg-5 wow fadeIn" data-wow-delay="0.1s">
+            <a href="index.html" class="navbar-brand ms-4 ms-lg-0">
+                <h1 class="fw-bold text-primary m-0">Where <span class="text-white">Is My </span>
+                    <Home class="text-success">Home</span>
+                </h1>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse"
+                data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
+                    <a href="notice.html" class="nav-item nav-link">공지 사항</a>
+                    <a href="news.html" class="nav-item nav-link">오늘의 뉴스</a>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center">
+            <h1 class="display-4 text-white animated slideInDown mb-4">Find Apartment</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <div class="row col-md-12 justify-content-center mb-2">
+                        <div class="form-group col-md-2">
+                            <select class="form-select bg-secondary text-darks" id="sido">
+                                <option value="all">도/광역시</option>
+                                <option value="서울특별시">서울시</option>
+                                <option value="경기도">경기도</option>
+                                <option value="인천광역시">인천광역시</option>
+                                <option value="부산광역시">부산광역시</option>
+                                <option value="대전광역시">대전광역시</option>
+                                <option value="대구광역시">대구광역시</option>
+                                <option value="울산광역시">울산광역시</option>
+                                <option value="세종특별자치시">세종시</option>
+                                <option value="광주광역시">광주광역시</option>
+                                <option value="강원도">강원도</option>
+                                <option value="충청북도">충청북도</option>
+                                <option value="경상북도">경상북도</option>
+                                <option value="경상남도">경상남도</option>
+                                <option value="전라북도">전라북도</option>
+                                <option value="전라남도">전라남도</option>
+                                <option value="제주특별자치도">제주도</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <select class="form-select bg-secondary text-darks" id="gugun">
+                                <option value="all">시/구/군</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <select class="form-select bg-secondary text-darks" id="dong">
+                                <option value="all">동</option>
+                            </select>
+                        </div>
+                        <button type="button" id="list-btn" class="btn btn-outline-primary" style="width: 210px">
+                            아파트매매정보가져오기
+                        </button>
+                    </div>
+        </div>
+        </ol>
+        </nav>
+    </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- 아파트 전월세, 매매 정보 출력 + 지도 출력 -->
+    <!-- Contact Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+
+                <div class="col-lg-5 wow fadeIn" data-wow-delay="0.1s" id="houseInfo" style="visibility: none;">
+                    <div class="d-inline-block rounded-pill bg-secondary text-primary py-1 px-3 mb-3">거래 정보</div>
+                    <div class="sidebar">
+
+                        <div class="block" id="aptlist"
+                            style="overflow:scroll; cursor:pointer; overflow-x: hidden; width:450px; height:600px;">
+                            <!-- <h3 class="title">거래 정보</h3> -->
+                            <!-- <div class="separator-2"></div>
+
+
+                            <div class="media margin-clear">
+                                <div class="media-body">
+                                    <h4><a href='javascript:moveMap(37.5861631,126.9675048,17);'>청운현대</a></h4>
+                                    <h6 class="media-heading" id='deal'>거래금액 : 88,500만원</h6>
+                                    <h6 class="media-heading" id='deal'>면적: 84.51</h6>
+                                    <p class="small margin-clear">
+                                        <i class="fa fa-calendar pr-10"></i></i>2019. 10. 9
+                                    </p>
+                                </div>
+                            </div>
+                            <hr> -->
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 카카오 지도 영역 선언 -->
+                <div id="map" class="col-lg-6 wow fadeIn" style="width:600px; height: 650px;"></div>
+                <script type="text/javascript"
+                    src="//dapi.kakao.com/v2/maps/sdk.js?appkey=46fd494f1be679a30b9f720d1fba5c6c&libraries=services"></script>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- Contact End -->
+    <script>
+
+        // 카카오 맵 API 영역 //
+        var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+        var options = { //지도를 생성할 때 필요한 기본 옵션
+            center: new kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
+            level: 3 //지도의 레벨(확대, 축소 정도)
+        };
+
+        var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+        // 주소-좌표 변환 객체를 생성합니다
+        var geocoder = new kakao.maps.services.Geocoder();
+
+        // HTML5의 geolocation으로 사용할 수 있는지 확인합니다 
+        if (navigator.geolocation) {
+
+            // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+            navigator.geolocation.getCurrentPosition(function (position) {
+
+                var lat = position.coords.latitude, // 위도
+                    lon = position.coords.longitude; // 경도
+
+                var locPosition = new kakao.maps.LatLng(lat, lon), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                // var locPosition = new kakao.maps.LatLng(36.1064011,128.4163183), // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+                                message = '<div style="padding:5px;">현재위치</div>'; // 인포윈도우에 표시될 내용입니다
+                // 마커와 인포윈도우를 표시합니다
+                displayMarker(locPosition, message);
+
+            });
+
+        } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+            var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+                message = 'geolocation을 사용할수 없어요..'
+
+            displayMarker(locPosition, message);
+        }
+
+        // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+        function displayMarker(locPosition, message) {
+
+            // 마커를 생성합니다
+            var marker = new kakao.maps.Marker({
+                map: map,
+                position: locPosition
+            });
+
+            var iwContent = message, // 인포윈도우에 표시할 내용
+                iwRemoveable = true;
+
+            // 인포윈도우를 생성합니다
+            var infowindow = new kakao.maps.InfoWindow({
+                content: iwContent,
+                removable: iwRemoveable
+            });
+
+            // 인포윈도우를 마커위에 표시합니다 
+            infowindow.open(map, marker);
+
+            // 지도 중심좌표를 접속위치로 변경합니다
+            map.setCenter(locPosition);
+        }
+        // 카카오 맵 API 영역 끝//
+
+        let date = new Date();
+
+        window.onload = function () {
+            // 브라우저가 열리면 시도정보 얻기.
+            sendRequest("sido", "*00000000");
+        };
+        // 시도가 바뀌면 구군정보 얻기.
+        document.querySelector("#sido").addEventListener("change", function () {
+            if (this[this.selectedIndex].value) {
+                let regcode = this[this.selectedIndex].value.substr(0, 2) + "*00000";
+                sendRequest("gugun", regcode);
+            } else {
+                initOption("gugun");
+                initOption("dong");
+            }
+        });
+
+        var now;
+
+        // 구군이 바뀌면 동정보 얻기.
+        document.querySelector("#gugun").addEventListener("change", function () {
+            if (this[this.selectedIndex].value) {
+                let regcode = this[this.selectedIndex].value.substr(0, 5) + "*";
+                sendRequest("dong", regcode);
+            } else {
+                initOption("dong");
+            }
+        });
+
+        //fetch() 함수를 통해 API 호출
+        // 호출 성공했을 경우 응답 전문을 객체로 받을 수 있음
+        // 호출 실패했을 경우 예외 객체
+        function sendRequest(selid, regcode) {
+            const url = "https://grpc-proxy-server-mkvo6j4wsq-du.a.run.app/v1/regcodes";
+            let params = "regcode_pattern=" + regcode + "&is_ignore_zero=true";
+            fetch(`${url}?${params}`)
+                .then((response) => response.json())
+                .then((data) => addOption(selid, data));
+        }
+
+        function addOption(selid, data) {
+            let opt = ``;
+            initOption(selid);
+            switch (selid) {
+                case "sido":
+                    opt += `<option value="">도/광역시</option>`;
+                    data.regcodes.forEach(function (regcode) {
+                        opt += `
+              <option value="${regcode.code}">${regcode.name}</option>
+              `;
+                    });
+                    break;
+                case "gugun":
+                    opt += `<option value="">시/구/군</option>`;
+                    for (let i = 0; i < data.regcodes.length; i++) {
+                        if (i != data.regcodes.length - 1) {
+                            if (
+                                data.regcodes[i].name.split(" ")[1] == data.regcodes[i + 1].name.split(" ")[1] &&
+                                data.regcodes[i].name.split(" ").length !=
+                                data.regcodes[i + 1].name.split(" ").length
+                            ) {
+                                data.regcodes.splice(i, 1);
+                                i--;
+                            }
+                        }
+                    }
+                    let name = "";
+                    data.regcodes.forEach(function (regcode) {
+                        if (regcode.name.split(" ").length == 2) name = regcode.name.split(" ")[1];
+                        else name = regcode.name.split(" ")[1] + " " + regcode.name.split(" ")[2];
+                        opt += `
+              <option value="${regcode.code}">${name}</option>
+              `;
+                    });
+                    break;
+                case "dong":
+                    opt += `<option value="">동</option>`;
+                    let idx = 2;
+                    data.regcodes.forEach(function (regcode) {
+                        if (regcode.name.split(" ").length != 3) idx = 3;
+                        opt += `
+              <option value="${regcode.code}">${regcode.name.split(" ")[idx]}</option>
+              `;
+                    });
+            }
+            document.querySelector(`#${selid}`).innerHTML = opt;
+        }
+
+        function initOption(selid) {
+            let options = document.querySelector(`#${selid}`);
+            options.length = 0;
+        }
+
+        ///////////////////////// 아파트 매매 정보 /////////////////////////
+        document.querySelector("#list-btn").addEventListener("click", function () {
+            let url =
+                "http://openapi.molit.go.kr/OpenAPI_ToolInstallPackage/service/rest/RTMSOBJSvc/getRTMSDataSvcAptTradeDev";
+            let gugunSel = document.querySelector("#gugun");
+            let regCode = gugunSel[gugunSel.selectedIndex].value.substr(0, 5);
+            console.log(gugunSel[gugunSel.selectedIndex].textContent);
+            now = gugunSel[gugunSel.selectedIndex].textContent;
+
+            // 주소로 좌표를 검색합니다
+            geocoder.addressSearch(now, function (result, status) {
+
+                // 정상적으로 검색이 완료됐으면 
+                if (status === kakao.maps.services.Status.OK) {
+
+                    var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+                    // 결과값으로 받은 위치를 마커로 표시합니다
+                    var marker = new kakao.maps.Marker({
+                        map: map,
+                        position: coords
+                    });
+
+                    // 인포윈도우로 장소에 대한 설명을 표시합니다
+                    var infowindow = new kakao.maps.InfoWindow({
+                        content: `<div style="width:150px;text-align:center;padding:6px 0;">${now}</div>`
+                    });
+                    infowindow.open(map, marker);
+
+                    // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                    map.setCenter(coords);
+                }
+            });
+
+
+
+            let dealYM = "202201";
+            let queryParams =
+                encodeURIComponent("serviceKey") +
+                "=" +
+                "elWenj1w%2BMhMY8XYxQIxnlzj%2F088UjkEMXKoxc04GcxSdmiBM%2FGyR%2FdknfpnlRMzNDrX%2BvD94CEHn%2Fak%2BwhIqQ%3D%3D"; /*Service Key*/
+            queryParams +=
+                "&" +
+                encodeURIComponent("LAWD_CD") +
+                "=" +
+                encodeURIComponent(regCode); /*아파트소재 구군*/
+            queryParams +=
+                "&" + encodeURIComponent("DEAL_YMD") + "=" + encodeURIComponent(dealYM); /*조회년월*/
+            queryParams +=
+                "&" + encodeURIComponent("pageNo") + "=" + encodeURIComponent("1"); /*페이지번호*/
+            queryParams +=
+                "&" + encodeURIComponent("numOfRows") + "=" + encodeURIComponent("30"); /*페이지당건수*/
+
+            fetch(`${url}?${queryParams}`)
+                .then((response) => response.text())
+                .then((data) => makeList(data));
+
+                // $(".aptName").on("click", function(){
+                //     alert($(this).attr('value'));
+                // });
+                var CurAptName;
+                $(document).on("click", ".aptName", function(){
+                    // alert("동작확인");
+                    // let item = (this).attr('value');
+                    console.log(this)
+                    // let temp = document.getElementById($(this)).value;
+                    // console.log(temp);
+                    CurAptName = $(this).attr('value');
+                    // alert($(this).attr('value'));
+
+                         // 장소 검색 객체를 생성합니다
+                        var ps = new kakao.maps.services.Places(); 
+
+                        // 키워드로 장소를 검색합니다
+                        ps.keywordSearch(CurAptName, placesSearchCB); 
+
+                        // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+                        function placesSearchCB (data, status, pagination) {
+                            if (status === kakao.maps.services.Status.OK) {
+
+                            // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                            // LatLngBounds 객체에 좌표를 추가합니다
+                            var bounds = new kakao.maps.LatLngBounds();
+
+                            displayMarker(data[0]);    
+                            bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
+
+        // for (var i=0; i<data.length; i++) {
+        //     displayMarker(data[i]);    
+        //     bounds.extend(new kakao.maps.LatLng(data[i].y, data[i].x));
+        // }       
+
+        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                            map.setBounds(bounds);
+                            } 
+                        }
+
+                        // 지도에 마커를 표시하는 함수입니다
+                    function displayMarker(place) {
+
+                        var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+                        var imageSize = new kakao.maps.Size(24, 35); 
+    
+                        // 마커 이미지를 생성합니다    
+                        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+    
+                        // 마커를 생성하고 지도에 표시합니다
+                        var marker = new kakao.maps.Marker({
+                            map: map,
+                            position: new kakao.maps.LatLng(place.y, place.x),
+                            image : markerImage // 마커 이미지 
+                        });
+
+                        // 마커에 클릭이벤트를 등록합니다
+                        kakao.maps.event.addListener(marker, 'click', function() {
+                        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+                        infowindow.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+                        infowindow.open(map, marker);
+                        });
+                    }
+                });
+
+        });
+
+        //   <div class="separator-2"></div>
+
+        //필요한 정보를 테이블에 추가
+        function makeList(data) {
+            document.querySelector("#houseInfo").setAttribute("style", "visibility: ;");
+            let tbody = document.querySelector("#aptlist");
+            let parser = new DOMParser();
+            const xml = parser.parseFromString(data, "application/xml");
+            console.log(xml);
+            initTable();
+            let apts = xml.querySelectorAll("item");
+            apts.forEach((apt) => {
+                let tr = document.createElement("div");
+                tr.setAttribute("class", "aptName");
+
+                // let aptInfo = apt.querySelector("아파트").textContent;
+
+                let nameTd = document.createElement("h4");
+                let aptName = apt.querySelector("아파트").textContent;
+                nameTd.appendChild(document.createTextNode(apt.querySelector("아파트").textContent));
+                nameTd.setAttribute("class", "text-primary");
+                // nameTd.setAttribute("class", "aptName");
+                // tr.setAttribute("value",  apt.querySelector("아파트").textContent);
+                console.log(apt.querySelector("아파트").textContent);
+                // tr.setAttribute("id", `${aptName}`);
+                tr.appendChild(nameTd);
+
+                let areaTd = document.createElement("h6");
+                areaTd.appendChild(document.createTextNode("면적 : " + apt.querySelector("전용면적").textContent));
+                tr.appendChild(areaTd);
+
+                let dongTd = document.createElement("h6");
+                dongTd.appendChild(document.createTextNode(apt.querySelector("법정동").textContent));
+                let aptInfo = apt.querySelector("법정동").textContent + " ";
+                aptInfo += aptName;
+                tr.setAttribute("value",  aptInfo);
+                console.log(aptInfo);
+                tr.appendChild(dongTd);
+
+                let priceTd = document.createElement("h6");
+                priceTd.appendChild(
+                    document.createTextNode("거래금액 : " + apt.querySelector("거래금액").textContent + "만원")
+                );
+                priceTd.classList.add("text-end");
+                tr.appendChild(priceTd);
+
+                tr.appendChild(document.createElement("hr"));
+
+                tbody.appendChild(tr);
+            });
+
+
+        }
+        function initTable() {
+            let tbody = document.querySelector("#aptlist");
+            removeAllchild(tbody);
+            // let len = tbody.rows.length;
+            // for (let i = len - 1; i >= 0; i--) {
+            //   tbody.deleteRow(i);
+            // }
+        }
+
+        function removeAllchild(div) {
+            while (div.hasChildNodes()) {
+                div.removeChild(div.firstChild);
+            }
+        }
+
+        // $(document).on("click", ".aptName", function(){
+        //     alert((this).attr("id"));
+        // });
+
+    </script>
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-6 col-md-6">
+                    <h1 class="fw-bold text-primary m-0 text-center">Where
+                        <span class="text-white">Is My </span>
+                        <Home class="text-success">Home</span>
+                    </h1>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Find Us</h5>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>대한민국 경북 구미시 3공단 3로 302</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+82) 02-3429-5100</p>
+                    <p><i class="fa fa-envelope me-3"></i>ssafy@ssafy.com</p>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Quick Links</h5>
+                    <a class="btn btn-link" href="notice.html">공지 사항</a>
+                    <a class="btn btn-link" href="news.html">오늘의 뉴스</a>
+                    <a class="btn btn-link" href="findAPT.html">아파트 실 거래 조회</a>
+                    <a class="btn btn-link" href="findStore.html">주변 상권 조회</a>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a href="#">PK</a>, All Right Reserved.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/parallax/parallax.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

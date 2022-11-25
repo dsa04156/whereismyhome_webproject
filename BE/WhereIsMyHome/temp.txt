@@ -1,0 +1,184 @@
+package com.ssafy.apt.controller;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.google.gson.Gson;
+//import com.google.gson.JsonObject;
+//import com.mysql.cj.xdevapi.JsonArray;
+import com.ssafy.apt.dto.APTDto;
+import com.ssafy.apt.dto.BookMarkDto;
+import com.ssafy.apt.dto.dongDto;
+import com.ssafy.apt.service.APTService;
+import com.ssafy.apt.service.APTServiceImpl;
+
+@RestController
+@RequestMapping("/apt")
+@CrossOrigin("*")
+public class APTController {
+
+	private static final Logger logger = LoggerFactory.getLogger(APTController.class);
+	
+	private APTService service;
+
+	@Autowired
+	public APTController(APTService service) {
+		super();
+		this.service = service;
+	}
+	
+	@GetMapping(value = "/")
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		response.setContentType("text/plain;charset=utf-8");
+		String action = request.getParameter("action");
+		System.out.println("action : " + action);
+		String path = "";
+
+		String root = request.getContextPath();
+
+		if (("searchGugun").equals(action)) {
+			searchGugun(request, response);
+		} else if (("searchDong").equals(action)) {
+			searchDong(request, response);
+		} else if (("searchApt").equals(action)) {
+			searchApt(request, response);
+		} else if (("addBookMark").equals(action)) {
+			addBookMark(request, response);
+		} else if (("searchBookMark").equals(action)) {
+			searchBookMark(request, response);
+		} else if (("deleteBookMark").equals(action)) {
+			deleteBookMark(request, response);
+		}
+	}
+
+	private void deleteBookMark(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String dongCode = request.getParameter("code");
+		
+		try {
+			service.deleteBookMark(id, dongCode);
+		} catch (Exception e) {
+			System.out.println("관심지역 삭제 실패 : " + e);
+		}
+		
+	}
+
+	private void addBookMark(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+		String dongCode = request.getParameter("code");
+
+		try {
+			service.addBookMark(id, dongCode);
+		} catch (Exception e) {
+			System.out.println("관심지역 등록 실패 : " + e);
+		}
+
+	}
+
+	private void searchBookMark(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
+
+		ArrayList<BookMarkDto> bookmarklist = new ArrayList<>();
+
+		try {
+			Gson gson = new Gson();
+			bookmarklist = service.getBookMarkList(id);
+
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("items", bookmarklist);
+			String result = gson.toJson(map);
+			System.out.println("bookmark result 변환 : \n " + result);
+
+			PrintWriter out = response.getWriter();
+			out.print(result);
+		} catch (Exception e) {
+			System.out.println("관심지역 정보 찾기 실패 : " + e);
+		}
+	}
+
+	private void searchApt(HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<APTDto> aptlist = new ArrayList<>();
+		String code = request.getParameter("code");
+		try {
+			Gson gson = new Gson();
+			System.out.println("final code : " + code);
+			aptlist = service.getList(code);
+
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("items", aptlist);
+			String result = gson.toJson(map);
+			System.out.println("apt result 변환 : \n " + result);
+
+			PrintWriter out = response.getWriter();
+			out.print(result);
+		} catch (Exception e) {
+			System.out.println("아파트 정보 찾기 실패 : " + e);
+		}
+	}
+
+	private void searchDong(HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<dongDto> donglist = new ArrayList<>();
+		try {
+			Gson gson = new Gson();
+			System.out.println("dong code : " + request.getParameter("code"));
+			donglist = service.searchdong(request.getParameter("code"));
+
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("items", donglist);
+			String result = gson.toJson(map);
+			System.out.println("dong result 변환 : \n " + result);
+
+			PrintWriter out = response.getWriter();
+			out.print(result);
+
+		} catch (Exception e) {
+			System.out.println("동 찾기 실패 : " + e);
+//			return "/error/error.jsp";
+		}
+
+	}
+
+	private void searchGugun(HttpServletRequest request, HttpServletResponse response) {
+		ArrayList<dongDto> gugunlist = new ArrayList<>();
+		try {
+			Gson gson = new Gson();
+			System.out.println("gugun code : " + request.getParameter("code"));
+			gugunlist = service.searchgugun(request.getParameter("code"));
+
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("items", gugunlist);
+			String result = gson.toJson(map);
+			System.out.println("gugun result 변환 : \n " + result);
+			PrintWriter out = response.getWriter();
+			out.print(result);
+		} catch (Exception e) {
+			System.out.println("구군 찾기 실패 : " + e);
+		}
+
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.setCharacterEncoding("utf-8");
+		doGet(request, response);
+	}
+
+}

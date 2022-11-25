@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.ssafy.notice.mapper.NoticeMapper">
+
+	<resultMap type="NoticeDTO" id="notice">
+		<result column="article_no" property="articleNo" />
+		<result column="member_id" property="id" />
+		<result column="subject" property="subject" />
+		<result column="content" property="content" />
+		<result column="register_time" property="regTime" />
+		<result column="hit" property="hit" />
+		<result column="topic" property="topic" />
+	</resultMap>
+
+	<select id="listArticle" resultMap="notice">
+		select article_no, member_id, subject, content, date_format(register_time, "%Y-%m-%d") as register_time, hit, topic
+		from board
+		order by article_no desc
+	</select>
+	
+	<select id="getArticle" parameterType="int" resultMap="notice">
+		select article_no, member_id, subject, content, date_format(register_time, "%Y-%m-%d") as register_time, hit, topic
+		from board
+		where article_no = #{articleNo}
+	</select>
+
+	<insert id="writeArticle" parameterType="noticeDTO">
+		insert into board (member_id, subject, content, register_time, topic)
+		values(#{id}, #{subject}, #{content}, now(), #{topic})
+	</insert>
+	
+	<update id="modifyArticle" parameterType="noticeDTO">
+		update board
+		set subject = #{subject}, content = #{content}
+		where article_no = #{articleNo} and member_id = #{id}
+	</update>
+	
+	<delete id="deleteArticle" parameterType="int">
+		delete from board
+		where article_no = #{articleNo}
+	</delete>
+	
+	<update id="updateHit" parameterType="int">
+		update board
+		set hit = hit + 1
+		where article_no = #{articleNo}
+	</update>
+
+</mapper>

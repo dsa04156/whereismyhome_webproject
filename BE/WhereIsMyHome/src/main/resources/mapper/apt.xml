@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.apt.mapper.APTMapper">
+
+	<resultMap type="dongDto" id="sido">
+		<result column="sidoCode" property="code" />
+		<result column="sidoName" property="Name" />
+	</resultMap>
+
+	<resultMap type="dongDto" id="gugun">
+		<result column="gugun" property="code" />
+		<result column="gugunName" property="Name" />
+	</resultMap>
+
+	<resultMap type="dongDto" id="dong">
+		<result column="dongCode" property="code" />
+		<result column="dongName" property="Name" />
+	</resultMap>
+
+	<select id="searchsido" resultMap="sido">
+		select distinct
+		left(dongCode,2) sidoCode, sidoName
+		from dongCode
+		order by sidoCode
+	</select>
+
+	<select id="searchgugun" parameterType="String"
+		resultMap="gugun">
+		select distinct gugunName, left(dongCode,4) gugun
+		from
+		dongCode
+		where left(dongCode,2) = #{code} and gugunName is not null
+		order by gugunName
+	</select>
+
+	<select id="searchdong" parameterType="String" resultMap="dong">
+		select
+		distinct dongCode, dongName
+		from dongcode
+		where left(dongCode,4) =
+		#{code} and dongName is not null
+		order by dongName
+	</select>
+
+	<select id="getList" parameterType="String" resultType="APTDto">
+		select
+		i.dongCode, i.aptCode, i.apartmentName aptName, i.roadName, i.jibun,
+		i.lng, i.lat, i.buildYear, d.area, max(d.dealAmount) dealAmount
+		from
+		houseinfo i inner join
+		housedeal d
+		on i.aptCode = d.aptCode
+		where
+		i.dongCode = #{code}
+		group by aptCode
+	</select>
+
+	<insert id="addBookMark" parameterType="String">
+		insert into bookmark(id,
+		dongCode, register_time)
+		values (#{id}, #{code}, now())
+	</insert>
+
+	<select id="getAptList" parameterType="String"
+		resultType="APTDto">
+		select
+		i.dongCode, i.aptCode, i.apartmentName aptName,
+		i.roadName, i.lng,
+		i.lat, d.area, max(d.dealAmount) dealAmount
+		from
+		houseinfo i inner join
+		housedeal d
+		on i.aptCode = d.aptCode
+		where
+		i.aptCode = #{code}
+		group by
+		aptCode
+	</select>
+
+	<select id="getDealList" parameterType="Map"
+		resultType="DealInfoDto">
+		select dealYear, dealMonth, dealDay, dealAmount, area,
+		floor
+		from housedeal
+		where aptCode = #{code}
+		order by dealYear desc,
+		dealMonth desc, dealDay desc
+		limit #{start}, #{listsize}
+	</select>
+
+	<select id="getDealAll" parameterType="String"
+		resultType="DealInfoDto">
+		select dealYear, dealMonth, dealDay, dealAmount, area,
+		floor
+		from housedeal
+		where aptCode = #{code}
+		order by dealYear desc,
+		dealMonth desc, dealDay desc
+	</select>
+
+	<select id="getDealSize" parameterType="String" resultType="int">
+		select count(*)
+		from housedeal
+		where aptCode = #{code}
+	</select>
+
+	<select id="getSchoolList" parameterType="String"
+		resultType="SchoolDto">
+		select name, truncate(ST_Distance_Sphere(POINT(#{lng}, #{lat}),
+		POINT(lng, lat)),0) AS distance
+		from school
+		where
+		ST_Distance_Sphere(POINT(#{lng}, #{lat}), POINT(lng, lat)) <![CDATA[ < ]]>
+		1000
+		order by distance;
+	</select>
+
+	<select id="getAvgAmoutList" parameterType="String"
+		resultType="AvgAmoutDto">
+		select dealYear, dealMonth, dealAmount as avgAmount from
+		housedeal
+		where aptCode = #{code}
+		group by dealYear, dealMonth
+		order by
+		dealYear;
+	</select>
+
+	<select id="getMinAmount" parameterType="String"
+		resultType="String">
+		select min(cast( replace(dealAmount, ',', '')as unsigned))
+		as minAmount
+		from housedeal
+		where aptCode = #{code};
+	</select>
+
+	<select id="getMaxAmount" parameterType="String"
+		resultType="String">
+		select max(cast( replace(dealAmount, ',', '')as unsigned))
+		as maxAmount
+		from housedeal
+		where aptCode = #{code};
+	</select>
+
+	<select id="getBookMarkList" parameterType="String"
+		resultType="BookMarkDto">
+		select d.dongCode, d.sidoName, d.gugunName, d.dongName
+		from dongcode d join bookmark b on d.dongCode = b.dongCode
+		where b.id = #{id}
+		order by d.dongCode
+	</select>
+
+	<delete id="deleteBookMark" parameterType="String">
+		delete from bookmark
+		where id = #{id} and dongCode = #{code}
+	</delete>
+
+	<select id="getRankList" resultType="RankDto">
+		select dongCode, count(*) as cnt, sidoName, gugunName, dongName from bookmark join dongcode using(dongCode)
+		group by dongCode
+		order by cnt desc;
+	</select>
+
+	<!-- <select id="getBookMarkList" parameterType="String" resultType="BookMarkDto"> 
+		select h.aptCode aptCode, h.apartmentName aptName, h.dong dongName, h.jibun, 
+		h.lng, h.lat, h.dongCode dongCode, d.sidoName sidoName, d.gugunNAme gugunName 
+		from houseinfo h join bookmark b on h.aptCode = b.aptCode join dongcode d 
+		on d.dongCode = h.dongCode where b.id = #{id} select h.aptCode aptCode, h.dong 
+		dongName, h.dongCode dongCode, d.sidoName sidoName, d.gugunNAme gugunName 
+		from houseinfo h join bookmark b on h.aptCode = b.aptCode join dongcode d 
+		on d.dongCode = h.dongCode where b.id = #{id}; </select> -->
+
+</mapper>

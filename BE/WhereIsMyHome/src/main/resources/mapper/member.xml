@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.member.mapper.MemberMapper">
+
+	<select id="login" parameterType="MemberDTO"
+		resultType="MemberDTO">
+		select id, name, email, level
+		from member
+		where id = #{id}
+		and pw = #{pw}
+	</select>
+
+	<insert id="join" parameterType="MemberDTO">
+		insert into member(id, pw, name, email, level)
+		values(#{id}, #{pw}, #{name} ,#{email}, #{level})
+	</insert>
+
+	<select id="getUserInfo" parameterType="String"
+		resultType="MemberDTO">
+		select id, name, email, joinDate
+		from member
+		where id = #{id}
+	</select>
+
+	<update id="editInfo" parameterType="MemberDTO">
+		update member
+		set pw = #{pw},
+		name = #{name},
+		email = #{email}
+		where id = #{id}
+	</update>
+
+	<delete id="deleteInfo" parameterType="String">
+		delete from member
+		where id
+		= #{id}
+	</delete>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from member
+		where id = #{id}
+	</select>
+
+	<update id="saveRefreshToken" parameterType="map">
+		update member
+		set
+		token = #{token}
+		where id = #{id}
+	</update>
+
+	<update id="deleteRefreshToken" parameterType="map">
+		update member
+		set token = #{token, jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+
+	<select id="checkId" parameterType="String" resultType="String"> 
+		select id from member where id = #{id} 
+	</select>
+</mapper>
